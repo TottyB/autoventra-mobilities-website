@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /av-manage
+Disallow: /av-manage/
+Disallow: /av-manage/*
+Allow: /

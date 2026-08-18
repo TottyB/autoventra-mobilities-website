@@ -57,7 +57,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       <section className="relative bg-gradient-to-b from-[#1a1a1a] to-[#0b0b0b] border-b border-white/10 py-16 lg:py-24 overflow-hidden">
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <span className="text-[#e24b4a] font-bold text-xs uppercase tracking-[0.3em] mb-2 block font-mono">
-            About AutoVentraMobilities
+            About AutoVentraMotors
           </span>
           <h1 className="text-4xl sm:text-6xl font-black font-heading uppercase tracking-tighter text-white">
             DRIVEN BY INTEGRITY,<br />
@@ -102,7 +102,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
             <div className="lg:col-span-5 bg-[#111] border border-white/10 p-6 sm:p-8 space-y-6">
               <div className="space-y-1">
                 <span className="text-[10px] text-[#e24b4a] font-mono uppercase tracking-widest font-bold">
-                  The AutoVentraMobilities Promise
+                  The AutoVentraMotors Promise
                 </span>
                 <h3 className="text-lg font-bold font-heading uppercase text-white">
                   {BRAND_INFO.slogan}

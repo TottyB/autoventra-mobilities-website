@@ -63,7 +63,7 @@ export const ContactPage: React.FC = () => {
             Get In Touch
           </span>
           <h1 className="text-4xl sm:text-6xl font-black font-heading uppercase tracking-tighter text-white">
-            CONTACT <span className="text-[#e24b4a]">AUTOVENTRAMOBILITIES</span>
+            CONTACT <span className="text-[#e24b4a]">AUTOVENTRAMOTORS</span>
           </h1>
           <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto font-medium">
             Visit our showroom on Ngong Road, Nairobi or connect with our automotive advisors directly via phone, email, or WhatsApp.
@@ -348,7 +348,7 @@ export const ContactPage: React.FC = () => {
 
           <PaymentInfo
             context="general payment / vehicle deposit"
-            title="AutoVentraMobilities M-Pesa Payment Details"
+            title="AutoVentraMotors M-Pesa Payment Details"
           />
         </div>
       </section>
@@ -380,7 +380,7 @@ export const ContactPage: React.FC = () => {
           {/* Map Container */}
           <div className="relative w-full h-80 sm:h-96 md:h-[400px] overflow-hidden border border-white/10 shadow-2xl">
             <iframe
-              title="AutoVentraMobilities Location - Ngong Road Nairobi"
+              title="AutoVentraMotors Location - Ngong Road Nairobi"
               src="https://maps.google.com/maps?q=Ngong%20Road,%20Nairobi,%20Kenya&t=&z=14&ie=UTF8&iwloc=&output=embed"
               className="w-full h-full border-0 filter grayscale contrast-125 opacity-90 hover:opacity-100 transition-opacity"
               loading="lazy"
@@ -389,7 +389,7 @@ export const ContactPage: React.FC = () => {
             {/* Map Overlay Badge */}
             <div className="absolute top-4 left-4 bg-[#0b0b0b]/90 backdrop-blur-md border border-white/10 px-4 py-2 text-xs flex items-center gap-2 shadow-lg pointer-events-none">
               <span className="w-2 h-2 bg-[#e24b4a] rotate-45" />
-              <span className="font-bold text-white uppercase text-[11px]">AutoVentraMobilities Showroom Hub</span>
+              <span className="font-bold text-white uppercase text-[11px]">AutoVentraMotors Showroom Hub</span>
             </div>
           </div>
         </div>

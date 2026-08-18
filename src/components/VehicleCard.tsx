@@ -37,7 +37,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
       : 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80';
 
   const whatsappMessage = encodeURIComponent(
-    `Hello AutoVentraMobilities, I am inquiring about the ${vehicle.year} ${vehicle.make} ${vehicle.model} (Price: ${formatPrice(
+    `Hello AutoVentraMotors, I am inquiring about the ${vehicle.year} ${vehicle.make} ${vehicle.model} (Price: ${formatPrice(
       vehicle.discount_price || vehicle.price
     )}). Is it available for viewing / test drive?`
   );
@@ -112,8 +112,8 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           {/* Specs Row */}
           <div className="flex flex-wrap items-center gap-3 sm:gap-5 text-xs text-white/70 font-mono">
             <div className="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 border border-white/5">
-              <Gauge className="w-3.5 h-3.5 text-[#e24b4a]" />
-              <span>{vehicle.mileage}</span>
+              <Car className="w-3.5 h-3.5 text-[#e24b4a]" />
+              <span>{vehicle.body_type}</span>
             </div>
             <div className="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 border border-white/5">
               <Cog className="w-3.5 h-3.5 text-[#e24b4a]" />
@@ -251,8 +251,8 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           {/* Specifications Pills */}
           <div className="grid grid-cols-3 gap-1.5 text-[11px] text-white/70 font-mono">
             <div className="bg-white/5 p-1.5 text-center border border-white/5">
-              <Gauge className="w-3 h-3 text-[#e24b4a] mx-auto mb-0.5" />
-              <span className="block truncate">{vehicle.mileage}</span>
+              <Car className="w-3 h-3 text-[#e24b4a] mx-auto mb-0.5" />
+              <span className="block truncate">{vehicle.condition || vehicle.body_type}</span>
             </div>
             <div className="bg-white/5 p-1.5 text-center border border-white/5">
               <Cog className="w-3 h-3 text-[#e24b4a] mx-auto mb-0.5" />

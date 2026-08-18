@@ -90,7 +90,7 @@ export const VehicleReservationModal: React.FC<VehicleReservationModalProps> = (
 
   const reservationContext = `purchase reservation deposit for ${vehicleTitle} (ID #${vehicle.id})`;
   const whatsappMsg = encodeURIComponent(
-    `Hello AutoVentraMobilities, I have submitted a reservation request to purchase the ${vehicleTitle} (Price: ${formatPrice(
+    `Hello AutoVentraMotors, I have submitted a reservation request to purchase the ${vehicleTitle} (Price: ${formatPrice(
       currentPrice
     )}). I would like to confirm my holding deposit payment.`
   );
@@ -209,7 +209,7 @@ export const VehicleReservationModal: React.FC<VehicleReservationModalProps> = (
                     {vehicleTitle}
                   </div>
                   <div className="text-xs text-white/50 font-mono">
-                    Condition: {vehicle.condition} • Mileage: {vehicle.mileage}
+                    Condition: {vehicle.condition} • {vehicle.transmission} • {vehicle.fuel_type}
                   </div>
                 </div>
                 <div className="text-left sm:text-right">

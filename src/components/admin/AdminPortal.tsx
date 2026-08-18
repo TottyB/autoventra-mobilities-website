@@ -17,6 +17,7 @@ import {
   adminSignOut,
   AdminStats,
   SUPABASE_SQL_SETUP,
+  STORAGE_BUCKET_SQL,
   isSupabaseConfigured,
 } from '../../lib/supabase';
 import { AdminLoginPage } from './AdminLoginPage';
@@ -102,6 +103,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
   const [deletingId, setDeletingId] = useState<string | number | null>(null);
   const [copiedSql, setCopiedSql] = useState<boolean>(false);
+  const [copiedStorageSql, setCopiedStorageSql] = useState<boolean>(false);
   const [notification, setNotification] = useState<{
     type: 'success' | 'error';
     message: string;
@@ -399,6 +401,12 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
     setTimeout(() => setCopiedSql(false), 2500);
   };
 
+  const handleCopyStorageSql = () => {
+    navigator.clipboard.writeText(STORAGE_BUCKET_SQL);
+    setCopiedStorageSql(true);
+    setTimeout(() => setCopiedStorageSql(false), 2500);
+  };
+
   // Format currency
   const formatPrice = (val: number) => {
     return new Intl.NumberFormat('en-KE', {
@@ -465,7 +473,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
               </div>
               <div>
                 <span className="font-heading font-black text-sm tracking-wider uppercase">
-                  AutoVentraMobilities
+                  AutoVentraMotors
                 </span>
                 <span className="ml-2 text-[10px] font-mono bg-[#e24b4a]/20 text-[#e24b4a] border border-[#e24b4a]/30 px-1.5 py-0.5 uppercase tracking-wider font-bold">
                   Admin Portal
@@ -796,9 +804,9 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                           {/* Specs Column */}
                           <td className="py-3.5 px-4 font-mono text-[11px] text-white/70">
-                            <div>{vehicle.mileage}</div>
+                            <div className="text-white/90">{vehicle.transmission}</div>
                             <div className="text-white/40">
-                              {vehicle.transmission} • {vehicle.fuel_type}
+                              {vehicle.fuel_type} • {vehicle.condition}
                             </div>
                           </td>
 
@@ -1214,7 +1222,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                               <a
                                 href={`https://wa.me/${whatsappPhone}?text=Hello%20${encodeURIComponent(
                                   lead.name
-                                )}%2C%20thank%20you%20for%20contacting%20AutoVentra%20regarding%20${encodeURIComponent(
+                                )}%2C%20thank%20you%20for%20contacting%20AutoVentraMotors%20regarding%20${encodeURIComponent(
                                   lead.rental_vehicle || lead.vehicle_name || 'your inquiry'
                                 )}.`}
                                 target="_blank"
@@ -1290,22 +1298,41 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                   </div>
                 </div>
 
-                <button
-                  onClick={handleCopySql}
-                  className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
-                >
-                  {copiedSql ? (
-                    <>
-                      <CheckCircle className="w-4 h-4 text-emerald-400" />
-                      <span>Copied to Clipboard!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-4 h-4" />
-                      <span>Copy Full SQL Migration</span>
-                    </>
-                  )}
-                </button>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    onClick={handleCopyStorageSql}
+                    className="px-3.5 py-2 bg-[#e24b4a]/20 hover:bg-[#e24b4a]/30 border border-[#e24b4a]/40 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
+                  >
+                    {copiedStorageSql ? (
+                      <>
+                        <CheckCircle className="w-4 h-4 text-emerald-400" />
+                        <span>Storage SQL Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4 text-[#e24b4a]" />
+                        <span>Copy Storage Bucket SQL</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={handleCopySql}
+                    className="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
+                  >
+                    {copiedSql ? (
+                      <>
+                        <CheckCircle className="w-4 h-4 text-emerald-400" />
+                        <span>Copied to Clipboard!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-4 h-4" />
+                        <span>Copy Full SQL Migration</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">

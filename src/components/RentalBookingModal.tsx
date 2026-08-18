@@ -111,7 +111,7 @@ export const RentalBookingModal: React.FC<RentalBookingModalProps> = ({
             </div>
             <div>
               <span className="text-[10px] font-bold font-mono tracking-widest text-[#e24b4a] uppercase">
-                AutoVentraMobilities Fleet Reservations
+                AutoVentraMotors Fleet Reservations
               </span>
               <h3 className="text-base sm:text-lg font-bold font-heading uppercase text-white">
                 Book a Rental Vehicle

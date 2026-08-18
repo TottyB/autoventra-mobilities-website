@@ -1,8 +1,8 @@
 import { ServiceItem, CoreValueItem, ObjectiveItem, GoalItem } from '../types';
 
 export const BRAND_INFO = {
-  name: 'AutoVentraMobilities',
-  fullName: 'AutoVentraMobilities',
+  name: 'AutoVentraMotors',
+  fullName: 'AutoVentraMotors',
   tagline: 'Driving Trust. Delivering Value.',
   heroHeadline: 'DRIVE WITH CONFIDENCE',
   heroSubheadline: 'Quality Vehicles. Reliable Rentals. Professional Transport Solutions.',
@@ -10,12 +10,12 @@ export const BRAND_INFO = {
   phone: '+254 702 957300',
   phoneRaw: '+254702957300',
   whatsapp: '254702957300',
-  email: 'info@autoventramobilities.com',
+  email: 'info@autoventramotors.com',
   location: 'Ngong Road, Nairobi, Kenya',
-  website: 'www.autoventramobilities.com',
-  whatsappUrl: 'https://wa.me/254702957300?text=Hello%20AutoVentraMobilities%2C%20I%20am%20inquiring%20about%20your%20vehicles%20and%20services.',
+  website: 'www.autoventramotors.com',
+  whatsappUrl: 'https://wa.me/254702957300?text=Hello%20AutoVentraMotors%2C%20I%20am%20inquiring%20about%20your%20vehicles%20and%20services.',
   telUrl: 'tel:+254702957300',
-  mailUrl: 'mailto:info@autoventramobilities.com',
+  mailUrl: 'mailto:info@autoventramotors.com',
   businessHours: [
     { days: 'Monday – Friday', hours: '8:00 AM – 6:00 PM' },
     { days: 'Saturday', hours: '9:00 AM – 4:00 PM' },
@@ -25,7 +25,7 @@ export const BRAND_INFO = {
 
 export const COMPANY_PROFILE = {
   title: 'COMPANY PROFILE',
-  text: 'AutoVentraMobilities is a modern automotive dealership and mobility solutions provider committed to making vehicle ownership and travel simple, reliable, and affordable. We specialize in the buying, selling, trading, and sourcing of quality vehicles while providing exceptional customer service, transparent transactions, and professional guidance. Our goal is to become the preferred destination for individuals, families, and businesses seeking dependable vehicles at competitive prices.',
+  text: 'AutoVentraMotors is a modern automotive dealership and mobility solutions provider committed to making vehicle ownership and travel simple, reliable, and affordable. We specialize in the buying, selling, trading, and sourcing of quality vehicles while providing exceptional customer service, transparent transactions, and professional guidance. Our goal is to become the preferred destination for individuals, families, and businesses seeking dependable vehicles at competitive prices.',
 };
 
 export const VISION = {
@@ -133,7 +133,7 @@ export const SERVICES: ServiceItem[] = [
     id: 'rentals',
     title: 'Car Rentals',
     shortDescription: 'Flexible daily, weekly, and monthly car rentals for executive travel, safari tours, and daily commuting.',
-    fullDescription: 'Whether you require an executive sedan for corporate meetings, a 4x4 SUV for safari excursions, or an economical hatchback for urban driving, AutoVentraMobilities offers well-maintained rental vehicles with instant booking.',
+    fullDescription: 'Whether you require an executive sedan for corporate meetings, a 4x4 SUV for safari excursions, or an economical hatchback for urban driving, AutoVentraMotors offers well-maintained rental vehicles with instant booking.',
     features: [
       'Self-drive and chauffeur-driven options',
       'Short-term daily hires and long-term corporate leases',

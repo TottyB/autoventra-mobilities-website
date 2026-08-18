@@ -58,7 +58,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       <section className="relative bg-gradient-to-b from-[#1a1a1a] to-[#0b0b0b] border-b border-white/10 py-16 lg:py-24 overflow-hidden">
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <span className="text-[#e24b4a] font-bold text-xs uppercase tracking-[0.3em] mb-2 block font-mono">
-            AutoVentraMobilities Solutions
+            AutoVentraMotors Solutions
           </span>
           <h1 className="text-4xl sm:text-6xl font-black font-heading uppercase tracking-tighter text-white">
             OUR <span className="text-[#e24b4a]">SERVICES</span>
@@ -142,7 +142,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 </div>
                 <div>
                   <span className="text-[10px] font-bold font-mono tracking-widest text-[#e24b4a] uppercase">
-                    AutoVentraMobilities Service Overview
+                    AutoVentraMotors Service Overview
                   </span>
                   <h3 className="text-lg font-bold font-heading uppercase text-white">
                     {selectedService.title}

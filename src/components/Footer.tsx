@@ -67,7 +67,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="lg:col-span-5 space-y-4">
             <AutoVentraLogo size="lg" showTagline={true} />
             <p className="text-zinc-400 text-xs leading-relaxed max-w-md pt-2">
-              AutoVentraMobilities is a modern automotive dealership and mobility solutions provider committed to making vehicle ownership and travel simple, reliable, and affordable. We specialize in the buying, selling, trading, and sourcing of quality vehicles while providing exceptional customer service and professional transport solutions.
+              AutoVentraMotors is a modern automotive dealership and mobility solutions provider committed to making vehicle ownership and travel simple, reliable, and affordable. We specialize in the buying, selling, trading, and sourcing of quality vehicles while providing exceptional customer service and professional transport solutions.
             </p>
             <div className="pt-2 flex items-center gap-2 text-[10px] text-zinc-500 font-mono uppercase tracking-wider">
               <Shield className="w-3.5 h-3.5 text-[#e24b4a]" />

@@ -77,7 +77,7 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#0b0b0b] flex-shrink-0">
           <div>
             <span className="text-[10px] font-bold tracking-widest text-[#e24b4a] uppercase font-mono">
-              AutoVentraMobilities Concierge
+              AutoVentraMotors Concierge
             </span>
             <h3 className="text-base font-bold font-heading uppercase text-white">
               Request a Service or Quote

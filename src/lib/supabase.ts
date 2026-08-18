@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS public.vehicles (
   make TEXT NOT NULL,
   model TEXT NOT NULL,
   year INT NOT NULL,
-  mileage TEXT NOT NULL,
+  mileage TEXT NULL DEFAULT '',
   transmission TEXT NOT NULL DEFAULT 'Automatic',
   fuel_type TEXT NOT NULL DEFAULT 'Petrol',
   body_type TEXT NOT NULL DEFAULT 'SUV',
@@ -207,10 +207,19 @@ CREATE POLICY "Authenticated admin can modify site settings" ON public.site_sett
   USING (auth.role() = 'authenticated')
   WITH CHECK (auth.role() = 'authenticated');
 
--- 8. Storage Bucket for Vehicle Photos
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('vehicle-photos', 'vehicle-photos', true)
-ON CONFLICT (id) DO NOTHING;
+-- 8. Storage Bucket for Vehicle Photos (Public access + Authenticated upload)
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'vehicle-photos',
+  'vehicle-photos',
+  true,
+  52428800,
+  ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif']
+)
+ON CONFLICT (id) DO UPDATE SET 
+  public = true,
+  file_size_limit = 52428800,
+  allowed_mime_types = ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'];
 
 -- Public can view images in vehicle-photos
 DROP POLICY IF EXISTS "Public vehicle photos view" ON storage.objects;
@@ -226,7 +235,62 @@ CREATE POLICY "Authenticated admin upload vehicle photos" ON storage.objects
   TO authenticated
   WITH CHECK (bucket_id = 'vehicle-photos');
 
+-- Authenticated admin can update vehicle photos
+DROP POLICY IF EXISTS "Authenticated admin update vehicle photos" ON storage.objects;
+CREATE POLICY "Authenticated admin update vehicle photos" ON storage.objects
+  FOR UPDATE
+  TO authenticated
+  USING (bucket_id = 'vehicle-photos')
+  WITH CHECK (bucket_id = 'vehicle-photos');
+
 -- Only authenticated admin can delete vehicle photos
+DROP POLICY IF EXISTS "Authenticated admin delete vehicle photos" ON storage.objects;
+CREATE POLICY "Authenticated admin delete vehicle photos" ON storage.objects
+  FOR DELETE
+  TO authenticated
+  USING (bucket_id = 'vehicle-photos');
+`;
+
+export const STORAGE_BUCKET_SQL = `-- AutoVentraMotors: Storage Bucket & RLS Setup
+-- Run this in Supabase Dashboard -> SQL Editor if photo uploads report "Bucket not found" or "RLS rejected"
+
+-- 1. Create or update the 'vehicle-photos' bucket with 50MB limit & image mime types
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'vehicle-photos',
+  'vehicle-photos',
+  true,
+  52428800,
+  ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif']
+)
+ON CONFLICT (id) DO UPDATE SET 
+  public = true,
+  file_size_limit = 52428800,
+  allowed_mime_types = ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif'];
+
+-- 2. Public can view/download images from vehicle-photos
+DROP POLICY IF EXISTS "Public vehicle photos view" ON storage.objects;
+CREATE POLICY "Public vehicle photos view" ON storage.objects
+  FOR SELECT
+  TO public
+  USING (bucket_id = 'vehicle-photos');
+
+-- 3. Authenticated admin can upload photos
+DROP POLICY IF EXISTS "Authenticated admin upload vehicle photos" ON storage.objects;
+CREATE POLICY "Authenticated admin upload vehicle photos" ON storage.objects
+  FOR INSERT
+  TO authenticated
+  WITH CHECK (bucket_id = 'vehicle-photos');
+
+-- 4. Authenticated admin can update photos
+DROP POLICY IF EXISTS "Authenticated admin update vehicle photos" ON storage.objects;
+CREATE POLICY "Authenticated admin update vehicle photos" ON storage.objects
+  FOR UPDATE
+  TO authenticated
+  USING (bucket_id = 'vehicle-photos')
+  WITH CHECK (bucket_id = 'vehicle-photos');
+
+-- 5. Authenticated admin can delete vehicle photos
 DROP POLICY IF EXISTS "Authenticated admin delete vehicle photos" ON storage.objects;
 CREATE POLICY "Authenticated admin delete vehicle photos" ON storage.objects
   FOR DELETE
@@ -425,7 +489,7 @@ export async function insertVehicle(
       make: vehicle.make.trim(),
       model: vehicle.model.trim(),
       year: Number(vehicle.year),
-      mileage: String(vehicle.mileage).trim(),
+      mileage: vehicle.mileage ? String(vehicle.mileage).trim() : '',
       transmission: vehicle.transmission || 'Automatic',
       fuel_type: vehicle.fuel_type || 'Petrol',
       body_type: vehicle.body_type || 'SUV',
@@ -485,7 +549,9 @@ export async function updateVehicle(
     if (vehicle.make !== undefined) payload.make = vehicle.make.trim();
     if (vehicle.model !== undefined) payload.model = vehicle.model.trim();
     if (vehicle.year !== undefined) payload.year = Number(vehicle.year);
-    if (vehicle.mileage !== undefined) payload.mileage = String(vehicle.mileage).trim();
+    if (vehicle.mileage !== undefined) {
+      payload.mileage = vehicle.mileage ? String(vehicle.mileage).trim() : '';
+    }
     if (vehicle.transmission !== undefined) payload.transmission = vehicle.transmission;
     if (vehicle.fuel_type !== undefined) payload.fuel_type = vehicle.fuel_type;
     if (vehicle.body_type !== undefined) payload.body_type = vehicle.body_type;
@@ -877,13 +943,28 @@ export async function updateSiteSettings(
  */
 export async function uploadVehiclePhoto(
   file: File
-): Promise<{ url: string | null; error: string | null }> {
+): Promise<{ url: string | null; error: string | null; errorCode?: string }> {
   if (!isSupabaseConfigured() || !supabase) {
-    return { url: null, error: 'Supabase is not configured' };
+    return {
+      url: null,
+      error: 'Supabase credentials are not configured in environment variables.',
+      errorCode: 'SUPABASE_NOT_CONFIGURED',
+    };
   }
 
   try {
-    const fileExt = file.name.split('.').pop() || 'jpg';
+    // 1. Verify authentication state
+    const { data: authData } = await supabase.auth.getSession();
+    if (!authData.session?.user) {
+      return {
+        url: null,
+        error:
+          'Admin session expired or unauthenticated. Please log in again at /av-manage before uploading photos.',
+        errorCode: 'UNAUTHENTICATED',
+      };
+    }
+
+    const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
     const cleanFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
     const filePath = `uploads/${cleanFileName}`;
 
@@ -892,13 +973,53 @@ export async function uploadVehiclePhoto(
       .upload(filePath, file, {
         cacheControl: '3600',
         upsert: false,
+        contentType: file.type || 'image/jpeg',
       });
 
     if (uploadError) {
-      console.warn('Storage upload error:', uploadError);
+      console.error('Supabase Storage upload error details:', uploadError);
+      const rawMsg = uploadError.message || String(uploadError);
+
+      if (
+        rawMsg.toLowerCase().includes('bucket not found') ||
+        (uploadError as { statusCode?: string | number }).statusCode === '404' ||
+        (uploadError as { statusCode?: string | number }).statusCode === 404
+      ) {
+        return {
+          url: null,
+          error:
+            "Storage bucket 'vehicle-photos' does not exist in your Supabase project. Please create the 'vehicle-photos' public bucket in Supabase Storage or run the provided SQL setup script in your Supabase SQL Editor.",
+          errorCode: 'BUCKET_NOT_FOUND',
+        };
+      }
+
+      if (
+        rawMsg.toLowerCase().includes('row-level security') ||
+        rawMsg.toLowerCase().includes('violates') ||
+        rawMsg.toLowerCase().includes('unauthorized') ||
+        (uploadError as { statusCode?: string | number }).statusCode === '403' ||
+        (uploadError as { statusCode?: string | number }).statusCode === 403
+      ) {
+        return {
+          url: null,
+          error:
+            "Storage RLS Policy Error: 'storage.objects' rejected the upload. Please verify that your Supabase Storage policies allow authenticated users to INSERT into bucket 'vehicle-photos'.",
+          errorCode: 'STORAGE_RLS_REJECTED',
+        };
+      }
+
+      if (rawMsg.toLowerCase().includes('payload too large') || rawMsg.toLowerCase().includes('exceeded')) {
+        return {
+          url: null,
+          error: `File size too large for Supabase storage limit: ${rawMsg}`,
+          errorCode: 'FILE_TOO_LARGE',
+        };
+      }
+
       return {
         url: null,
-        error: `${uploadError.message}. Ensure 'vehicle-photos' storage bucket exists in Supabase.`,
+        error: `Supabase Storage upload error: ${rawMsg}`,
+        errorCode: 'STORAGE_UPLOAD_ERROR',
       };
     }
 
@@ -906,9 +1027,18 @@ export async function uploadVehiclePhoto(
       .from('vehicle-photos')
       .getPublicUrl(filePath);
 
+    if (!publicData?.publicUrl) {
+      return {
+        url: null,
+        error: 'Failed to retrieve public URL from Supabase Storage.',
+        errorCode: 'PUBLIC_URL_FAILED',
+      };
+    }
+
     return { url: publicData.publicUrl, error: null };
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : 'Upload failed';
-    return { url: null, error: msg };
+    const msg = err instanceof Error ? err.message : 'Storage upload failed due to network error';
+    console.error('Storage upload caught exception:', err);
+    return { url: null, error: msg, errorCode: 'NETWORK_OR_RUNTIME_ERROR' };
   }
 }

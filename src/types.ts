@@ -14,7 +14,7 @@ export interface Vehicle {
   make: string;
   model: string;
   year: number;
-  mileage: number | string;
+  mileage?: number | string | null;
   transmission: string;
   fuel_type: string;
   body_type: string;

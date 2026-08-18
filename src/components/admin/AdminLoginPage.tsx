@@ -53,7 +53,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
           className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-white/50 hover:text-white transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 text-[#e24b4a]" />
-          <span>Back to AutoVentraMobilities</span>
+          <span>Back to AutoVentraMotors</span>
         </button>
 
         <span className="text-[10px] font-mono text-white/30 uppercase tracking-wider">
@@ -69,7 +69,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({
             <Lock className="w-6 h-6" />
           </div>
           <h1 className="text-xl font-bold uppercase tracking-wider font-heading text-white">
-            AutoVentraMobilities Admin Portal
+            AutoVentraMotors Admin Portal
           </h1>
           <p className="text-xs text-white/50 font-mono">
             Secure Management Console & Inventory Control

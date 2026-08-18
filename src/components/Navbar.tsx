@@ -93,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             id="brand-logo-btn"
             onClick={() => handleLinkClick('home')}
             className="flex items-center text-left focus:outline-none group cursor-pointer"
-            aria-label="AutoVentraMobilities Home"
+            aria-label="AutoVentraMotors Home"
           >
             <AutoVentraLogo size="md" showTagline={false} />
           </button>
@@ -144,7 +144,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               id="mobile-call-quick-btn"
               href={BRAND_INFO.telUrl}
               className="p-2.5 bg-[#111] text-[#e24b4a] border border-white/10"
-              aria-label="Call AutoVentraMobilities"
+              aria-label="Call AutoVentraMotors"
             >
               <Phone className="w-4 h-4" />
             </a>

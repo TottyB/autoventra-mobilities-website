@@ -46,13 +46,13 @@ export const AutoVentraLogo: React.FC<AutoVentraLogoProps> = ({
             AUTOVENTRA
           </span>
           <span className="text-base md:text-lg tracking-tight text-[#e24b4a] ml-1">
-            MOBILITIES
+            MOTORS
           </span>
         </div>
 
         <div className="flex items-center gap-1.5 mt-1">
           <span className="text-[9px] uppercase tracking-[0.2em] text-[#e24b4a] font-bold font-mono">
-            Mobility & Automotive Group
+            Motors & Automotive Group
           </span>
         </div>
 

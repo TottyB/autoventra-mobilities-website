@@ -182,7 +182,7 @@ export const VehicleDetailPage: React.FC<VehicleDetailPageProps> = ({
 
   // WhatsApp link pre-filled with vehicle name and pricing
   const whatsappMessage = encodeURIComponent(
-    `Hello AutoVentraMobilities, I am asking about this vehicle on your website: ${vehicleTitle} (Price: ${formatPrice(
+    `Hello AutoVentraMotors, I am asking about this vehicle on your website: ${vehicleTitle} (Price: ${formatPrice(
       vehicle.discount_price || vehicle.price
     )}, ID: ${vehicle.id}). Is it still available for viewing at Ngong Road?`
   );
@@ -334,11 +334,6 @@ export const VehicleDetailPage: React.FC<VehicleDetailPageProps> = ({
                 <div className="bg-[#0b0b0b] p-3 border border-white/5">
                   <span className="text-white/40 uppercase block text-[10px]">Year of Manufacture</span>
                   <strong className="text-white font-medium text-sm">{vehicle.year}</strong>
-                </div>
-
-                <div className="bg-[#0b0b0b] p-3 border border-white/5">
-                  <span className="text-white/40 uppercase block text-[10px]">Mileage</span>
-                  <strong className="text-white font-medium text-sm">{vehicle.mileage}</strong>
                 </div>
 
                 <div className="bg-[#0b0b0b] p-3 border border-white/5">

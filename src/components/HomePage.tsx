@@ -306,11 +306,11 @@ export const HomePage: React.FC<HomePageProps> = ({
         <section className="py-16 lg:py-20 border-b border-[#0b0b0b]/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-              {/* Left Column: Why AutoVentraMobilities (4 Core Pillars) */}
+              {/* Left Column: Why AutoVentraMotors (4 Core Pillars) */}
               <div className="lg:col-span-4 bg-white/60 p-6 sm:p-8 border border-[#0b0b0b]/5 flex flex-col justify-between">
                 <div>
                   <h2 className="text-xs font-black uppercase tracking-[0.2em] text-[#e24b4a] mb-6">
-                    Why AutoVentraMobilities
+                    Why AutoVentraMotors
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
                     {CORE_VALUES.slice(0, 4).map((val, idx) => (

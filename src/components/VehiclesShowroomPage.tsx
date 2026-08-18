@@ -38,7 +38,7 @@ export const VehiclesShowroomPage: React.FC<VehiclesShowroomPageProps> = ({
 
   // Search & Sorting
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState<'newest' | 'price-asc' | 'price-desc' | 'year-desc' | 'mileage-asc'>('newest');
+  const [sortBy, setSortBy] = useState<'newest' | 'price-asc' | 'price-desc' | 'year-desc'>('newest');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   // Filters
@@ -172,11 +172,6 @@ export const VehiclesShowroomPage: React.FC<VehiclesShowroomPageProps> = ({
         if (sortBy === 'price-asc') return priceA - priceB;
         if (sortBy === 'price-desc') return priceB - priceA;
         if (sortBy === 'year-desc') return b.year - a.year;
-        if (sortBy === 'mileage-asc') {
-          const numA = parseInt(String(a.mileage).replace(/[^0-9]/g, '')) || 0;
-          const numB = parseInt(String(b.mileage).replace(/[^0-9]/g, '')) || 0;
-          return numA - numB;
-        }
         // Default: newest listed
         return new Date(b.created_at || '').getTime() - new Date(a.created_at || '').getTime();
       });
@@ -238,7 +233,7 @@ export const VehiclesShowroomPage: React.FC<VehiclesShowroomPageProps> = ({
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-2">
               <span className="text-[#e24b4a] font-bold text-xs uppercase tracking-[0.3em] block font-mono">
-                AutoVentraMobilities Verified Inventory
+                AutoVentraMotors Verified Inventory
               </span>
               <h1 className="text-3xl sm:text-5xl font-black font-heading uppercase tracking-tighter text-white">
                 VEHICLE <span className="text-[#e24b4a]">SHOWROOM</span>
@@ -325,7 +320,6 @@ export const VehiclesShowroomPage: React.FC<VehiclesShowroomPageProps> = ({
                 <option value="price-asc" className="bg-[#111]">Price: Low to High</option>
                 <option value="price-desc" className="bg-[#111]">Price: High to Low</option>
                 <option value="year-desc" className="bg-[#111]">Year: Newest First</option>
-                <option value="mileage-asc" className="bg-[#111]">Mileage: Low to High</option>
               </select>
             </div>
 
